@@ -1,0 +1,32 @@
+services:
+
+  db:
+    image: mysql:8.0.35
+    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
+    # (this is just an example, not intended to be a production configuration)
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 1
+    ports:
+      - 3307:3306
+    networks:
+      - goda-be
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  goda-be:
+    build: 
+      context: ./
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - goda-be
+    depends_on:
+      - db
+
+networks:
+  goda-be:
+    driver: bridge
