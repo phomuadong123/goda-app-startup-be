@@ -12,6 +12,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.goda.ai.model.User;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class UserDetailsImpl implements UserDetails {
   private static final long serialVersionUID = 1L;
 
@@ -21,18 +26,21 @@ public class UserDetailsImpl implements UserDetails {
 
   private String email;
 
+  private String avatar;
+
   @JsonIgnore
   private String password;
 
   private Collection<? extends GrantedAuthority> authorities;
 
-  public UserDetailsImpl(Long id, String username, String email, String password,
+  public UserDetailsImpl(Long id, String username, String email,String avatar, String password,
       Collection<? extends GrantedAuthority> authorities) {
     this.id = id;
     this.username = username;
     this.email = email;
     this.password = password;
     this.authorities = authorities;
+    this.avatar=avatar;
   }
 
   public static UserDetailsImpl build(User user) {
@@ -44,6 +52,7 @@ public class UserDetailsImpl implements UserDetails {
         user.getId(), 
         user.getUsername(), 
         user.getEmail(),
+        user.getAvatar(),
         user.getPassword(), 
         authorities);
   }
@@ -52,6 +61,7 @@ public class UserDetailsImpl implements UserDetails {
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return authorities;
   }
+  
 
   public Long getId() {
     return id;
@@ -60,6 +70,7 @@ public class UserDetailsImpl implements UserDetails {
   public String getEmail() {
     return email;
   }
+  
 
   @Override
   public String getPassword() {

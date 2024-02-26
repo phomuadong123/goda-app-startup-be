@@ -13,7 +13,8 @@ import com.goda.ai.payload.request.ChatRequest;
 public class ApiService {
 
     
-    private RestTemplate restTemplate;
+    @Autowired
+private RestTemplate restTemplate;
 
     public String callApi(ChatRequest request) {
         String url = "http://localhost:8000/chat"; // Replace with your URL

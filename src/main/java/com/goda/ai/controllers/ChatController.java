@@ -18,7 +18,7 @@ public class ChatController {
     private ApiService apiService;
 
     @PostMapping()
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER')")
     public String callApi(@RequestBody ChatRequest request) {
         return apiService.callApi(request);
     }
